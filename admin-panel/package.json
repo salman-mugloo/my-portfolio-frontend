@@ -1,0 +1,27 @@
+{
+  "name": "portfolio-admin-panel",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'ERROR: Admin panel should not be run standalone. Access via /cms routes in main portfolio app (port 7000).' && exit 1",
+    "build": "vite build",
+    "preview": "echo 'ERROR: Admin panel should not be run standalone. Access via /cms routes in main portfolio app (port 7000).' && exit 1"
+  },
+  "dependencies": {
+    "lucide-react": "^0.344.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-easy-crop": "^5.5.6",
+    "react-router-dom": "^6.20.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "vite": "^5.0.8"
+  }
+}

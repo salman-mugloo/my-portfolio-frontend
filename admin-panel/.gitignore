@@ -1,0 +1,14 @@
+# Admin panel is now integrated into main portfolio
+# This directory contains components only, not a standalone app
+
+# Prevent accidental builds
+dist/
+build/
+
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.local
+
