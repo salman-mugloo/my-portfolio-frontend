@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:7002/api';
+const API_URL = import.meta.env.VITE_API_URL;
 
 // Helper function for API calls
 const apiCall = async (endpoint, options = {}) => {
@@ -14,7 +14,7 @@ const apiCall = async (endpoint, options = {}) => {
   };
 
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+    const response = await fetch(`${API_URL}${endpoint}`, config);
     
     // Check if response is JSON
     const contentType = response.headers.get('content-type');
@@ -106,7 +106,7 @@ export const certificationsAPI = {
   getAllCertifications: () => apiCall('/certifications/admin'),
   createCertification: (formData) => {
     const token = localStorage.getItem('adminToken');
-    return fetch(`${API_BASE_URL}/certifications/admin`, {
+    return fetch(`${API_URL}/certifications/admin`, {
       method: 'POST',
       headers: {
         ...(token && { Authorization: `Bearer ${token}` })
@@ -116,7 +116,7 @@ export const certificationsAPI = {
   },
   updateCertification: (id, formData) => {
     const token = localStorage.getItem('adminToken');
-    return fetch(`${API_BASE_URL}/certifications/admin/${id}`, {
+    return fetch(`${API_URL}/certifications/admin/${id}`, {
       method: 'PUT',
       headers: {
         ...(token && { Authorization: `Bearer ${token}` })
@@ -136,7 +136,7 @@ export const resumeAPI = {
   getAllResumes: () => apiCall('/resume/admin'),
   uploadResume: (formData) => {
     const token = localStorage.getItem('adminToken');
-    return fetch(`${API_BASE_URL}/resume/admin`, {
+    return fetch(`${API_URL}/resume/admin`, {
       method: 'POST',
       headers: {
         ...(token && { Authorization: `Bearer ${token}` })
@@ -169,7 +169,7 @@ export const profileAPI = {
     }),
   uploadProfileImage: (formData) => {
     const token = localStorage.getItem('adminToken');
-    return fetch(`${API_BASE_URL}/profile/image`, {
+    return fetch(`${API_URL}/profile/image`, {
       method: 'POST',
       headers: {
         ...(token && { Authorization: `Bearer ${token}` })

@@ -119,7 +119,7 @@ const Hero = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:7002/api';
+        const API_URL = import.meta.env.VITE_API_URL;
         const data = await profileAPI.getProfile();
         // Format profile image URL if exists
         if (data && data.profileImageUrl) {
@@ -131,7 +131,7 @@ const Hero = () => {
             const path = data.profileImageUrl.startsWith('/') 
               ? data.profileImageUrl 
               : `/${data.profileImageUrl}`;
-            imageUrl = `${API_BASE_URL.replace('/api', '')}${path}`;
+            imageUrl = `${API_URL.replace('/api', '')}${path}`;
           }
           console.log('Portfolio: Profile image URL constructed:', imageUrl);
           data.profileImageUrl = imageUrl;
@@ -592,15 +592,15 @@ const CertificationsSection = () => {
   useEffect(() => {
     const fetchCertifications = async () => {
       try {
-        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:7002/api';
+        const API_URL = import.meta.env.VITE_API_URL;
         const data = await certificationsAPI.getCertifications();
         // Map API data to match frontend structure
         const formatted = data.map((cert) => ({
           id: cert.id,
           title: cert.title,
           issuer: cert.issuer,
-          image: cert.image ? `${API_BASE_URL.replace('/api', '')}${cert.image}` : null,
-          pdf: cert.pdf ? `${API_BASE_URL.replace('/api', '')}${cert.pdf}` : null
+          image: cert.image ? `${API_URL.replace('/api', '')}${cert.image}` : null,
+          pdf: cert.pdf ? `${API_URL.replace('/api', '')}${cert.pdf}` : null
         }));
         setCertificates(formatted);
       } catch (error) {
@@ -1430,12 +1430,12 @@ export function PortfolioApp() {
   useEffect(() => {
     const fetchResumeUrl = async () => {
       try {
-        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:7002/api';
+        const API_URL = import.meta.env.VITE_API_URL;
         const data = await resumeAPI.getResume();
         if (data && data.fileUrl) {
           const url = data.fileUrl.startsWith('http')
             ? data.fileUrl
-            : `${API_BASE_URL.replace('/api', '')}${data.fileUrl}`;
+            : `${API_URL.replace('/api', '')}${data.fileUrl}`;
           setResumeUrl(url);
         } else {
           setResumeUrl(null);

@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:7002/api';
+const API_URL = import.meta.env.VITE_API_URL;
 
 // CSRF token cache
 let csrfTokenCache = null;
@@ -28,7 +28,7 @@ export const fetchCSRFToken = async (forceRefresh = false) => {
         throw new Error('No authentication token');
       }
 
-      const response = await fetch(`${API_BASE_URL}/auth/csrf-token`, {
+      const response = await fetch(`${API_URL}/auth/csrf-token`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -108,7 +108,7 @@ const apiCall = async (endpoint, options = {}, retryOnCSRF = true) => {
   };
 
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+    const response = await fetch(`${API_URL}${endpoint}`, config);
     
     // Check if response is JSON
     const contentType = response.headers.get('content-type');

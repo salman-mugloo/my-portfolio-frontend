@@ -3,7 +3,7 @@ import { resumeAPI } from '../services/api';
 import { Upload, Trash2, FileText, Download, CheckCircle } from 'lucide-react';
 
 // Get API base URL from environment
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:7002/api';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Resume = () => {
   const [resumes, setResumes] = useState([]);
@@ -140,7 +140,7 @@ const Resume = () => {
     }
     
     // Prepend the backend base URL (without /api)
-    return `${API_BASE_URL.replace('/api', '')}${relativePath}`;
+    return `${API_URL.replace('/api', '')}${relativePath}`;
   };
 
   if (loading) {

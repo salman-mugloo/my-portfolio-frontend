@@ -737,7 +737,7 @@ const Profile = () => {
       return null;
     }
 
-    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:7002/api';
+    const API_URL = import.meta.env.VITE_API_URL;
 
     // If profileImageUrl is already an absolute URL, return it as-is
     if (profile.profileImageUrl.startsWith('http')) {
@@ -751,7 +751,7 @@ const Profile = () => {
     
     // If it already starts with /uploads/, use it directly
     if (relativePath.startsWith('/uploads/')) {
-      const fullUrl = `${API_BASE_URL.replace('/api', '')}${relativePath}`;
+      const fullUrl = `${API_URL.replace('/api', '')}${relativePath}`;
       console.log('getImageUrl: Constructed URL from /uploads/ path:', fullUrl);
       return fullUrl;
     }
@@ -766,7 +766,7 @@ const Profile = () => {
     }
 
     // Prepend the backend base URL (without /api)
-    const fullUrl = `${API_BASE_URL.replace('/api', '')}${relativePath}`;
+    const fullUrl = `${API_URL.replace('/api', '')}${relativePath}`;
     console.log('getImageUrl: Final constructed URL:', fullUrl);
     return fullUrl;
   };
