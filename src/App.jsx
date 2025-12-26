@@ -770,13 +770,20 @@ const CertificationsSection = () => {
                   <p className="text-gray-400">Issued by {selectedCert.issuer}</p>
                 </div>
 
-                {/* Image-style Preview - Show image or placeholder (no PDF rendering) */}
+                {/* Preview - Image or PDF (both fill modal space properly) */}
                 <div className="relative w-full bg-white/5 rounded-xl overflow-hidden flex-1 min-h-0 mb-6">
                   {selectedCert.image ? (
                     <img 
                       src={selectedCert.image} 
                       alt={selectedCert.title}
                       className="w-full h-full object-contain mx-auto"
+                    />
+                  ) : selectedCert.pdf ? (
+                    <iframe
+                      src={`${encodeURI(selectedCert.pdf)}#toolbar=0&navpanes=0&scrollbar=0`}
+                      className="w-full h-full border-0"
+                      title={selectedCert.title}
+                      loading="lazy"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-500/10 to-blue-500/10">
