@@ -121,13 +121,13 @@ const Hero = () => {
       try {
         const API_URL = import.meta.env.VITE_API_URL;
         const data = await profileAPI.getProfile();
-        // Format profile image URL if exists
+        // Format profile image URL if exists (same normalization as certificate images)
         if (data && data.profileImageUrl) {
           let imageUrl;
           if (data.profileImageUrl.startsWith('http')) {
             imageUrl = data.profileImageUrl;
           } else {
-            // Normalize path to always start with '/'
+            // Normalize path to always start with '/' (same logic as certificates)
             let normalizedPath = data.profileImageUrl;
             
             // Remove 'server/' prefix if present (e.g., "server/uploads/..." -> "uploads/...")
@@ -140,6 +140,7 @@ const Hero = () => {
               normalizedPath = '/' + normalizedPath;
             }
             
+            // Build absolute URL using API_URL (same as certificate images/PDFs)
             imageUrl = `${API_URL.replace('/api', '')}${normalizedPath}`;
           }
           console.log('Portfolio: Profile image URL constructed:', imageUrl);
