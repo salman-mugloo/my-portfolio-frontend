@@ -752,7 +752,7 @@ const CertificationsSection = () => {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-4xl w-full h-[85vh] bg-black/50 border border-white/10 rounded-2xl overflow-hidden flex flex-col"
+              className="relative max-w-4xl w-full h-[75vh] bg-black/50 border border-white/10 rounded-2xl overflow-hidden flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -780,17 +780,17 @@ const CertificationsSection = () => {
                       onError={(e) => {
                         e.target.style.display = 'none';
                         if (selectedCert.pdf) {
-                          const pdfFrame = e.target.parentElement.querySelector('.pdf-preview-modal');
-                          if (pdfFrame) pdfFrame.style.display = 'block';
+                          const pdfEmbed = e.target.parentElement.querySelector('.pdf-preview-modal');
+                          if (pdfEmbed) pdfEmbed.style.display = 'block';
                         }
                       }}
                     />
                   ) : selectedCert.pdf ? (
-                    <iframe
-                      src={`${encodeURI(selectedCert.pdf)}#toolbar=0&navpanes=0&scrollbar=0`}
-                      className="w-full h-full pdf-preview-modal border-0"
+                    <embed
+                      src={selectedCert.pdf}
+                      type="application/pdf"
+                      className="w-full h-full pdf-preview-modal"
                       title={selectedCert.title}
-                      loading="lazy"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-500/10 to-blue-500/10">
