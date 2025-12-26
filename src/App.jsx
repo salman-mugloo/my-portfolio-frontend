@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, memo } from 'react';
-import { projectsAPI, expertiseAPI, skillsAPI, certificationsAPI, contactAPI, profileAPI, resumeAPI, featuresAPI, contactInfoAPI, educationAPI } from './services/api';
+import { projectsAPI, expertiseAPI, skillsAPI, certificationsAPI, contactAPI, profileAPI, resumeAPI, featuresAPI, contactInfoAPI, educationAPI, languagesAPI } from './services/api';
 import { 
   motion, 
   AnimatePresence, 
@@ -44,7 +44,8 @@ import {
   AlertCircle,
   Send,
   Image,
-  GraduationCap
+  GraduationCap,
+  Languages
 } from 'lucide-react';
 
 // --- Shared Spring Config ---
@@ -1255,6 +1256,73 @@ const EducationSection = () => {
   );
 };
 
+// Languages Section Component
+const LanguagesSection = () => {
+  const [languages, setLanguages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLanguages = async () => {
+      try {
+        const data = await languagesAPI.getLanguages();
+        setLanguages(data || []);
+      } catch (error) {
+        console.error('Error fetching languages:', error);
+        setLanguages([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLanguages();
+  }, []);
+
+  if (loading) {
+    return (
+      <section id="languages" className="py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeader title="LANGUAGES" subtitle="Communication" icon={Languages} />
+          <div className="text-center text-gray-500">Loading...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (languages.length === 0) {
+    return null;
+  }
+
+  return (
+    <section id="languages" className="py-32 px-6">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeader title="LANGUAGES" subtitle="Communication" icon={Languages} />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+          {languages.map((lang, index) => (
+            <motion.div 
+              key={lang._id || index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
+              className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+                  <Languages className="text-emerald-400" size={24} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-black text-white mb-1">{lang.name}</h3>
+                  <p className="text-sm text-gray-400 font-medium">{lang.proficiency}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // Contact Section Component
 const ContactSection = ({ onOpenModal }) => {
   const [contactInfo, setContactInfo] = useState(null);
@@ -1439,6 +1507,9 @@ export function PortfolioApp() {
 
       {/* Education Section */}
       <EducationSection />
+
+      {/* Languages Section */}
+      <LanguagesSection />
 
       {/* Core Tech Stack */}
       <TechStackSection />

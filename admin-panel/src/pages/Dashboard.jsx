@@ -11,6 +11,7 @@ const Dashboard = ({ onLogout }) => {
     { path: '/cms/dashboard/change-password', label: 'Name & Password' },
     { path: '/cms/dashboard/features', label: 'About Features' },
     { path: '/cms/dashboard/education', label: 'Education' },
+    { path: '/cms/dashboard/languages', label: 'Languages' },
     { path: '/cms/dashboard/skills', label: 'Skills / Tech Stack' },
     { path: '/cms/dashboard/expertise', label: 'Technical Expertise' },
     { path: '/cms/dashboard/projects', label: 'Projects' },

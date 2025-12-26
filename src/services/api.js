@@ -193,3 +193,23 @@ export const contactInfoAPI = {
 export const educationAPI = {
   getEducation: () => apiCall('/education')
 };
+
+// Languages API
+export const languagesAPI = {
+  getLanguages: () => apiCall('/languages'),
+  getAll: () => apiCall('/languages/admin'),
+  create: (language) => 
+    apiCall('/languages/admin', {
+      method: 'POST',
+      body: JSON.stringify(language)
+    }),
+  update: (id, language) => 
+    apiCall(`/languages/admin/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(language)
+    }),
+  delete: (id) => 
+    apiCall(`/languages/admin/${id}`, {
+      method: 'DELETE'
+    })
+};

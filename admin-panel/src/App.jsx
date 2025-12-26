@@ -15,6 +15,7 @@ import Profile from './pages/Profile';
 import Features from './pages/Features';
 import ContactInfo from './pages/ContactInfo';
 import Education from './pages/Education';
+import Languages from './pages/Languages';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -93,6 +94,7 @@ function App() {
           <Route path="features" element={<Features />} />
           <Route path="contact-info" element={<ContactInfo />} />
           <Route path="education" element={<Education />} />
+          <Route path="languages" element={<Languages />} />
           <Route path="change-password" element={<ChangePassword />} />
         </Route>
       </Routes>
