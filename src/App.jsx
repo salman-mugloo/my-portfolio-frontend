@@ -752,8 +752,7 @@ const CertificationsSection = () => {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-4xl w-full bg-black/50 border border-white/10 rounded-2xl overflow-hidden"
-              style={{ maxHeight: '80vh' }}
+              className="relative max-w-4xl w-full h-[85vh] bg-black/50 border border-white/10 rounded-2xl overflow-hidden flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -764,20 +763,20 @@ const CertificationsSection = () => {
                 <X className="text-white group-hover:rotate-90 transition-transform" size={24} />
               </button>
 
-              {/* Certificate Content - Scrollable */}
-              <div className="relative p-6 overflow-y-auto" style={{ maxHeight: '80vh' }}>
-                <div className="mb-4 text-center">
+              {/* Certificate Content - Flex Column Layout */}
+              <div className="relative p-6 flex flex-col flex-1 min-h-0">
+                <div className="mb-4 text-center flex-shrink-0">
                   <h3 className="text-2xl font-black text-emerald-400 mb-2">{selectedCert.title}</h3>
                   <p className="text-gray-400">Issued by {selectedCert.issuer}</p>
                 </div>
 
                 {/* Single Preview - Image OR PDF (not both) */}
-                <div className="relative w-full bg-white/5 rounded-xl overflow-hidden mb-6">
+                <div className="relative w-full bg-white/5 rounded-xl overflow-hidden flex-1 min-h-0 mb-6">
                   {selectedCert.image ? (
                     <img 
                       src={selectedCert.image} 
                       alt={selectedCert.title}
-                      className="w-full h-auto max-h-[60vh] object-contain mx-auto"
+                      className="w-full h-full object-contain mx-auto"
                       onError={(e) => {
                         e.target.style.display = 'none';
                         if (selectedCert.pdf) {
@@ -789,12 +788,12 @@ const CertificationsSection = () => {
                   ) : selectedCert.pdf ? (
                     <iframe
                       src={`${encodeURI(selectedCert.pdf)}#toolbar=0&navpanes=0&scrollbar=0`}
-                      className="w-full h-[60vh] pdf-preview-modal border-0"
+                      className="w-full h-full pdf-preview-modal border-0"
                       title={selectedCert.title}
                       loading="lazy"
                     />
                   ) : (
-                    <div className="w-full h-[60vh] flex items-center justify-center bg-gradient-to-br from-emerald-500/10 to-blue-500/10">
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-500/10 to-blue-500/10">
                       <Award className="text-emerald-400" size={128} />
                     </div>
                   )}
@@ -802,7 +801,7 @@ const CertificationsSection = () => {
 
                 {/* View PDF Button - Only show if PDF exists */}
                 {selectedCert.pdf && (
-                  <div className="flex justify-center">
+                  <div className="flex justify-center flex-shrink-0">
                     <a
                       href={encodeURI(selectedCert.pdf)}
                       target="_blank"
