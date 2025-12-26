@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { certificationsAPI } from '../services/api';
-import { Plus, Edit2, Trash2, X, Award, Upload } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, Award, Upload, FileText, ExternalLink } from 'lucide-react';
 
 const Certifications = () => {
   const [certifications, setCertifications] = useState([]);
@@ -27,8 +27,15 @@ const Certifications = () => {
 
   const fetchCertifications = async () => {
     try {
+      const API_URL = import.meta.env.VITE_API_URL;
       const data = await certificationsAPI.getAll();
-      setCertifications(data);
+      // Format URLs for images and PDFs
+      const formatted = data.map((cert) => ({
+        ...cert,
+        image: cert.image ? `${API_URL.replace('/api', '')}${cert.image}` : null,
+        pdf: cert.pdf ? `${API_URL.replace('/api', '')}${cert.pdf}` : null
+      }));
+      setCertifications(formatted);
     } catch (error) {
       console.error('Error fetching certifications:', error);
     } finally {
@@ -331,6 +338,39 @@ const Certifications = () => {
               </span>
             </div>
 
+            {/* Preview Section */}
+            <div className="mb-4 space-y-3">
+              {cert.image && (
+                <div className="w-full h-32 bg-white/5 rounded-lg overflow-hidden border border-white/10">
+                  <img
+                    src={cert.image}
+                    alt={cert.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
+              {cert.pdf && (
+                <div className="w-full h-32 bg-white/5 rounded-lg overflow-hidden border border-white/10">
+                  <iframe
+                    src={`${encodeURI(cert.pdf)}#page=1&zoom=50&toolbar=0`}
+                    className="w-full h-full border-0"
+                    title={cert.title}
+                    style={{ pointerEvents: 'none' }}
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              {!cert.image && !cert.pdf && (
+                <div className="w-full h-32 bg-white/5 rounded-lg border border-white/10 flex items-center justify-center">
+                  <Award className="text-gray-500" size={32} />
+                </div>
+              )}
+            </div>
+
+            {/* File Indicators */}
             <div className="flex gap-2 mb-4">
               {cert.image && (
                 <span className="px-2 py-1 text-xs bg-blue-500/20 text-blue-400 rounded">

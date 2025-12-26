@@ -790,16 +790,27 @@ const CertificationsSection = () => {
 
                 {/* PDF Download Button */}
                 {selectedCert.pdf && (
-                  <div className="mt-6 flex justify-center gap-4">
+                  <div className="mt-6 space-y-4">
+                    {/* PDF Preview */}
+                    <div className="w-full bg-white/5 rounded-xl overflow-hidden border border-white/10" style={{ minHeight: '400px' }}>
+                      <iframe
+                        src={`${encodeURI(selectedCert.pdf)}#toolbar=0&navpanes=0&scrollbar=0`}
+                        className="w-full h-full border-0"
+                        style={{ minHeight: '400px' }}
+                        title={selectedCert.title}
+                        loading="lazy"
+                      />
+                    </div>
+                    {/* View PDF Button */}
                     <a
                       href={encodeURI(selectedCert.pdf)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-6 py-3 bg-emerald-500 text-black font-black rounded-xl hover:bg-emerald-400 transition-all flex items-center gap-2 group"
+                      className="block px-6 py-3 bg-emerald-500 text-black font-black rounded-xl hover:bg-emerald-400 transition-all flex items-center justify-center gap-2 group"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <FileText size={20} />
-                      View PDF
+                      View Full PDF
                       <ExternalLink size={16} />
                     </a>
                   </div>
