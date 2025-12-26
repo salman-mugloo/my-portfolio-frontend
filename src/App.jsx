@@ -750,7 +750,7 @@ const CertificationsSection = () => {
                   <p className="text-gray-400">Issued by {selectedCert.issuer}</p>
                 </div>
 
-                {/* Image-only Preview (PDF opens via button only) */}
+                {/* Image Preview - Always use image for preview (even if PDF exists) */}
                 <div className="relative w-full bg-white/5 rounded-xl overflow-hidden flex-1 min-h-0 mb-6">
                   {selectedCert.image ? (
                     <img 
@@ -765,7 +765,7 @@ const CertificationsSection = () => {
                   )}
                 </div>
 
-                {/* View PDF Button - Only show if PDF exists */}
+                {/* View PDF Button - Opens PDF file (not image) when clicked */}
                 {selectedCert.pdf && (
                   <div className="flex justify-center flex-shrink-0">
                     <a
