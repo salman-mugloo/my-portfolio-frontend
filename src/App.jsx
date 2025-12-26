@@ -752,7 +752,8 @@ const CertificationsSection = () => {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-4xl w-full max-h-[90vh] bg-black/50 border border-white/10 rounded-2xl overflow-hidden"
+              className="relative max-w-4xl w-full bg-black/50 border border-white/10 rounded-2xl overflow-hidden"
+              style={{ maxHeight: '80vh' }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -763,14 +764,15 @@ const CertificationsSection = () => {
                 <X className="text-white group-hover:rotate-90 transition-transform" size={24} />
               </button>
 
-              {/* Certificate Content */}
-              <div className="relative p-6">
+              {/* Certificate Content - Scrollable */}
+              <div className="relative p-6 overflow-y-auto" style={{ maxHeight: '80vh' }}>
                 <div className="mb-4 text-center">
                   <h3 className="text-2xl font-black text-emerald-400 mb-2">{selectedCert.title}</h3>
                   <p className="text-gray-400">Issued by {selectedCert.issuer}</p>
                 </div>
 
-                <div className="relative w-full bg-white/5 rounded-xl overflow-hidden">
+                {/* Single Preview - Image OR PDF (not both) */}
+                <div className="relative w-full bg-white/5 rounded-xl overflow-hidden mb-6">
                   {selectedCert.image ? (
                     <img 
                       src={selectedCert.image} 
@@ -798,25 +800,14 @@ const CertificationsSection = () => {
                   )}
                 </div>
 
-                {/* PDF Download Button */}
+                {/* View PDF Button - Only show if PDF exists */}
                 {selectedCert.pdf && (
-                  <div className="mt-6 space-y-4">
-                    {/* PDF Preview */}
-                    <div className="w-full bg-white/5 rounded-xl overflow-hidden border border-white/10" style={{ minHeight: '400px' }}>
-                      <iframe
-                        src={`${encodeURI(selectedCert.pdf)}#toolbar=0&navpanes=0&scrollbar=0`}
-                        className="w-full h-full border-0"
-                        style={{ minHeight: '400px' }}
-                        title={selectedCert.title}
-                        loading="lazy"
-                      />
-                    </div>
-                    {/* View PDF Button */}
+                  <div className="flex justify-center">
                     <a
                       href={encodeURI(selectedCert.pdf)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-6 py-3 bg-emerald-500 text-black font-black rounded-xl hover:bg-emerald-400 transition-all flex items-center justify-center gap-2 group"
+                      className="px-6 py-3 bg-emerald-500 text-black font-black rounded-xl hover:bg-emerald-400 transition-all flex items-center justify-center gap-2 group"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <FileText size={20} />
