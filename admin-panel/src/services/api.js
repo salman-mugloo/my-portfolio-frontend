@@ -327,4 +327,19 @@ export const profileAPI = {
   deleteResume: () => apiCall('/profile/resume', { method: 'DELETE' })
 };
 
+export const languagesAPI = {
+  getAll: () => apiCall('/languages/admin'),
+  create: (language) => apiCall('/languages/admin', {
+    method: 'POST',
+    body: JSON.stringify(language)
+  }),
+  update: (id, language) => apiCall(`/languages/admin/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(language)
+  }),
+  delete: (id) => apiCall(`/languages/admin/${id}`, {
+    method: 'DELETE'
+  })
+};
+
 
