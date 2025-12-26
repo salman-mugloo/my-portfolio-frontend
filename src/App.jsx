@@ -127,11 +127,20 @@ const Hero = () => {
           if (data.profileImageUrl.startsWith('http')) {
             imageUrl = data.profileImageUrl;
           } else {
-            // Ensure the path starts with / if it's a relative path
-            const path = data.profileImageUrl.startsWith('/') 
-              ? data.profileImageUrl 
-              : `/${data.profileImageUrl}`;
-            imageUrl = `${API_URL.replace('/api', '')}${path}`;
+            // Normalize path to always start with '/'
+            let normalizedPath = data.profileImageUrl;
+            
+            // Remove 'server/' prefix if present (e.g., "server/uploads/..." -> "uploads/...")
+            if (normalizedPath.startsWith('server/')) {
+              normalizedPath = normalizedPath.substring(7);
+            }
+            
+            // Ensure path starts with '/'
+            if (!normalizedPath.startsWith('/')) {
+              normalizedPath = '/' + normalizedPath;
+            }
+            
+            imageUrl = `${API_URL.replace('/api', '')}${normalizedPath}`;
           }
           console.log('Portfolio: Profile image URL constructed:', imageUrl);
           data.profileImageUrl = imageUrl;

@@ -745,28 +745,28 @@ const Profile = () => {
       return profile.profileImageUrl;
     }
 
-    // Extract the relative path from the stored path
+    // Normalize path to always start with '/'
     // profileImageUrl might be like: "server/uploads/profile/filename.jpg" or "/uploads/profile/filename.jpg" or "uploads/profile/filename.jpg"
-    let relativePath = profile.profileImageUrl;
+    let normalizedPath = profile.profileImageUrl;
     
-    // If it already starts with /uploads/, use it directly
-    if (relativePath.startsWith('/uploads/')) {
-      const fullUrl = `${API_URL.replace('/api', '')}${relativePath}`;
-      console.log('getImageUrl: Constructed URL from /uploads/ path:', fullUrl);
-      return fullUrl;
+    // Remove 'server/' prefix if present (e.g., "server/uploads/..." -> "uploads/...")
+    if (normalizedPath.startsWith('server/')) {
+      normalizedPath = normalizedPath.substring(7);
     }
     
-    if (relativePath.includes('uploads')) {
-      // Extract everything from "uploads" onwards
-      const uploadsIndex = relativePath.indexOf('uploads');
-      relativePath = '/' + relativePath.substring(uploadsIndex);
-    } else if (!relativePath.startsWith('/')) {
-      // If it doesn't start with /, add it
-      relativePath = '/' + relativePath;
+    // If path contains 'uploads', extract from 'uploads' onwards
+    if (normalizedPath.includes('uploads')) {
+      const uploadsIndex = normalizedPath.indexOf('uploads');
+      normalizedPath = normalizedPath.substring(uploadsIndex);
+    }
+    
+    // Ensure path starts with '/'
+    if (!normalizedPath.startsWith('/')) {
+      normalizedPath = '/' + normalizedPath;
     }
 
     // Prepend the backend base URL (without /api)
-    const fullUrl = `${API_URL.replace('/api', '')}${relativePath}`;
+    const fullUrl = `${API_URL.replace('/api', '')}${normalizedPath}`;
     console.log('getImageUrl: Final constructed URL:', fullUrl);
     return fullUrl;
   };
