@@ -770,27 +770,13 @@ const CertificationsSection = () => {
                   <p className="text-gray-400">Issued by {selectedCert.issuer}</p>
                 </div>
 
-                {/* Single Preview - Image OR PDF (not both) */}
+                {/* Image-style Preview - Show image or placeholder (no PDF rendering) */}
                 <div className="relative w-full bg-white/5 rounded-xl overflow-hidden flex-1 min-h-0 mb-6">
                   {selectedCert.image ? (
                     <img 
                       src={selectedCert.image} 
                       alt={selectedCert.title}
                       className="w-full h-full object-contain mx-auto"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        if (selectedCert.pdf) {
-                          const pdfEmbed = e.target.parentElement.querySelector('.pdf-preview-modal');
-                          if (pdfEmbed) pdfEmbed.style.display = 'block';
-                        }
-                      }}
-                    />
-                  ) : selectedCert.pdf ? (
-                    <embed
-                      src={selectedCert.pdf}
-                      type="application/pdf"
-                      className="w-full h-full pdf-preview-modal"
-                      title={selectedCert.title}
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-500/10 to-blue-500/10">
