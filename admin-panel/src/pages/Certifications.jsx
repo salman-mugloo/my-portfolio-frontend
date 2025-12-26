@@ -338,38 +338,6 @@ const Certifications = () => {
               </span>
             </div>
 
-            {/* Preview Section */}
-            <div className="mb-4 space-y-3">
-              {cert.image && (
-                <div className="w-full h-32 bg-white/5 rounded-lg overflow-hidden border border-white/10">
-                  <img
-                    src={cert.image}
-                    alt={cert.title}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                    }}
-                  />
-                </div>
-              )}
-              {cert.pdf && (
-                <div className="w-full h-32 bg-white/5 rounded-lg overflow-hidden border border-white/10">
-                  <iframe
-                    src={`${encodeURI(cert.pdf)}#page=1&zoom=50&toolbar=0`}
-                    className="w-full h-full border-0"
-                    title={cert.title}
-                    style={{ pointerEvents: 'none' }}
-                    loading="lazy"
-                  />
-                </div>
-              )}
-              {!cert.image && !cert.pdf && (
-                <div className="w-full h-32 bg-white/5 rounded-lg border border-white/10 flex items-center justify-center">
-                  <Award className="text-gray-500" size={32} />
-                </div>
-              )}
-            </div>
-
             {/* File Indicators */}
             <div className="flex gap-2 mb-4">
               {cert.image && (

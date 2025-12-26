@@ -695,32 +695,11 @@ const CertificationsSection = () => {
                         src={cert.image} 
                         alt={cert.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                          if (cert.pdf) {
-                            const pdfFrame = e.target.parentElement.querySelector('.pdf-preview');
-                            if (pdfFrame) pdfFrame.style.display = 'block';
-                          } else {
-                            const nextSibling = e.target.nextSibling;
-                            if (nextSibling && nextSibling.style) {
-                              nextSibling.style.display = 'flex';
-                            }
-                          }
-                        }}
                       />
-                    ) : cert.pdf ? (
-                      <iframe
-                        src={`${encodeURI(cert.pdf)}#page=1&zoom=50`}
-                        className="w-full h-full pdf-preview border-0"
-                        title={cert.title}
-                        style={{ pointerEvents: 'none' }}
-                        loading="lazy"
-                      />
-                    ) : null}
-                    {!cert.image && !cert.pdf && (
+                    ) : (
                       <div className="w-full h-full items-center justify-center bg-gradient-to-br from-emerald-500/10 to-blue-500/10 flex">
-                      <Award className="text-emerald-400" size={64} />
-                    </div>
+                        <Award className="text-emerald-400" size={64} />
+                      </div>
                     )}
                   </div>
                   <h3 className="text-xl font-black mb-2 group-hover:text-emerald-400 transition-colors uppercase tracking-tight">
@@ -770,20 +749,13 @@ const CertificationsSection = () => {
                   <p className="text-gray-400">Issued by {selectedCert.issuer}</p>
                 </div>
 
-                {/* Preview - Image or PDF (both fill modal space properly) */}
-                <div className="relative w-full bg-white/5 rounded-xl overflow-hidden flex-1 min-h-0 mb-6 flex items-center justify-center">
+                {/* Image-only Preview (PDF opens via button only) */}
+                <div className="relative w-full bg-white/5 rounded-xl overflow-hidden flex-1 min-h-0 mb-6">
                   {selectedCert.image ? (
                     <img 
                       src={selectedCert.image} 
                       alt={selectedCert.title}
                       className="w-full h-full object-contain mx-auto"
-                    />
-                  ) : selectedCert.pdf ? (
-                    <iframe
-                      src={`${encodeURI(selectedCert.pdf)}#toolbar=0&navpanes=0&scrollbar=0`}
-                      className="absolute inset-0 w-full h-full border-0"
-                      title={selectedCert.title}
-                      loading="lazy"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-500/10 to-blue-500/10">
