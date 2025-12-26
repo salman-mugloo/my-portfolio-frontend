@@ -20,6 +20,7 @@ import Profile from '../admin-panel/src/pages/Profile';
 import Features from '../admin-panel/src/pages/Features';
 import ContactInfo from '../admin-panel/src/pages/ContactInfo';
 import Education from '../admin-panel/src/pages/Education';
+import Languages from '../admin-panel/src/pages/Languages';
 import ActivityLogs from '../admin-panel/src/pages/ActivityLogs';
 import { clearCSRFToken, fetchCSRFToken, authAPI } from '../admin-panel/src/services/api';
 
@@ -118,6 +119,7 @@ function AppRouter() {
               <Route path="features" element={<Features />} />
                     <Route path="contact-info" element={<ContactInfo />} />
                     <Route path="education" element={<Education />} />
+                    <Route path="languages" element={<Languages />} />
                     <Route path="change-password" element={<ChangePassword />} />
                     <Route path="activity-logs" element={<ActivityLogs />} />
             </Route>
