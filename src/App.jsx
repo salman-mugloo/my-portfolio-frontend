@@ -605,14 +605,51 @@ const CertificationsSection = () => {
       try {
         const API_URL = import.meta.env.VITE_API_URL;
         const data = await certificationsAPI.getCertifications();
+        
+        // Build base URL (remove /api suffix if present)
+        const baseURL = API_URL ? API_URL.replace('/api', '').replace(/\/$/, '') : '';
+        
         // Map API data to match frontend structure
-        const formatted = data.map((cert) => ({
-          id: cert.id,
-          title: cert.title,
-          issuer: cert.issuer,
-          image: cert.image ? `${API_URL.replace('/api', '')}${cert.image}` : null,
-          pdf: cert.pdf ? `${API_URL.replace('/api', '')}${cert.pdf}` : null
-        }));
+        const formatted = data.map((cert) => {
+          // Normalize image path
+          let imageUrl = null;
+          if (cert.image) {
+            let imagePath = cert.image;
+            // Ensure path starts with /
+            if (!imagePath.startsWith('/')) {
+              imagePath = '/' + imagePath;
+            }
+            // Remove 'server/' prefix if present
+            if (imagePath.startsWith('/server/')) {
+              imagePath = imagePath.substring(7);
+            }
+            imageUrl = `${baseURL}${imagePath}`;
+          }
+          
+          // Normalize PDF path
+          let pdfUrl = null;
+          if (cert.pdf) {
+            let pdfPath = cert.pdf;
+            // Ensure path starts with /
+            if (!pdfPath.startsWith('/')) {
+              pdfPath = '/' + pdfPath;
+            }
+            // Remove 'server/' prefix if present
+            if (pdfPath.startsWith('/server/')) {
+              pdfPath = pdfPath.substring(7);
+            }
+            pdfUrl = `${baseURL}${pdfPath}`;
+          }
+          
+          return {
+            id: cert.id,
+            title: cert.title,
+            issuer: cert.issuer,
+            image: imageUrl,
+            pdf: pdfUrl
+          };
+        });
+        
         setCertificates(formatted);
       } catch (error) {
         console.error('Error fetching certifications:', error);
